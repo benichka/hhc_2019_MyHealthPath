@@ -1,0 +1,14 @@
+{
+  "name": "hhcamp-hospital-bot",
+  "version": "1.0.0",
+  "description": "Hacking Health Camp 2019 Hospital Bot- My Health Path",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HHCamp",
+  "license": "ISC",
+  "dependencies": {
+    "rainbow-node-sdk": "^1.53.1"
+  }
+}
