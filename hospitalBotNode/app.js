@@ -62,6 +62,11 @@ const helloResponse = `Hello, which service would you like to use? \n
 let options = []; 
 const optionsService = ['Dentist', 'Surgeon', 'Radiology'];
 const optionsDate = ['29/03/2019', '01/04/2019', '04/04/2019'];
+const optionsTime = ['14:30', '15:00', '19:30'];
+
+let serviceChosen = '';
+let dateChosen = '';
+let timeChosen  = '';
 
 
 
@@ -73,14 +78,35 @@ function manageMessage(message) {
         rainbowSDK.im.sendMessageToJid(helloResponse, message.fromJid);
         options = optionsService;
     } else if (message.content === '1' || message.content === '2' || message.content === '3'){
+
         console.log('[HHCAMP] OPTIONS:', options)
+
+        //CHECK IF THIS IS THE FIRST STEP - CHOSING SERVICE
         if (compareArrays(options, optionsService)) {
                 console.log('[HHCAMP] SENDING OPTIONS')
                 rainbowSDK.im.sendMessageToJid('You have chosen ' + options[message.content-1] + '\n Which of the following dates suits you? \n 1. 29/03/2019 \n 2. 01/04/2019 \n 3. 04/04/2019', message.fromJid);
+
+            serviceChosen = options[message.content-1];
+
+            //set next step
+            options = optionsDate;
         }
 
+        //CHECK IF THIS IS THE SECOND STEP - CHOSING DATE
+        else if(compareArrays(options, optionsDate)) {
+            console.log('[HHCAMP] SENDING TIME OPTIONS');
+            rainbowSDK.im.sendMessageToJid('You have chosen ' + options[message.content-1] + '\n At what time would you like to visit us? \n 1. 14:30 \n 2. 15:00 \n 3. 19:30', message.fromJid)
+            dateChosen = options[message.content-1];
+            options = optionsTime;
+        }
 
-        //TODO - add other options
+        else if(compareArrays(options, optionsTime)) {
+            console.log('[HHCAMP] SENDING CONFIRMATION');
+            timeChosen  = options[message.content-1];
+            let confirmationString = 'You have successfuly booked an appointment at ' + serviceChosen + '. You will meet your doctor on ' + dateChosen + ' at ' + timeChosen;
+            rainbowSDK.im.sendMessageToJid(confirmationString, message.fromJid)
+            options = '';
+        }
     }
 }
 
