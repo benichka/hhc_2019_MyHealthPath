@@ -103,8 +103,10 @@ function manageMessage(message) {
         else if(compareArrays(options, optionsTime)) {
             console.log('[HHCAMP] SENDING CONFIRMATION');
             timeChosen  = options[message.content-1];
-            let confirmationString = 'You have successfuly booked an appointment at ' + serviceChosen + '. You will meet your doctor on ' + dateChosen + ' at ' + timeChosen;
+            let confirmationString = 'You have successfuly booked an appointment at ' + serviceChosen + '. You will meet your doctor on ' + dateChosen + ' at ' + timeChosen + '.' ;
+            let parkingString = 'The closest parking spot to the place of your appointment is here: https://maps.app.goo.gl/Wo7Nc \n\n\n 48.57674, 7.738938 '
             rainbowSDK.im.sendMessageToJid(confirmationString, message.fromJid)
+            rainbowSDK.im.sendMessageToJid(parkingString, message.fromJid)
             options = '';
         }
     }
